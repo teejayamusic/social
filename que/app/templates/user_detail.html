@@ -1,0 +1,298 @@
+<!-- users/templates/users/user_detail.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ user.username }}'s Profile</title>
+</head>
+<body>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+     
+     *{
+        margin: 0;
+        padding: 0;
+        font-family: 'Roboto', sans-serif;
+     }
+        .profile p{
+            font-size: 25px;
+            font-weight: lighter;
+            margin-top: 0px;
+            margin-bottom: 5px;
+        }
+        .content{
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 30px;
+        
+        }
+        .content img{
+            height: 250px;
+            width: 250px;
+            object-fit: contain;
+border-radius: 50%;
+border: 1px solid;
+        }
+.profile h2{
+    font-size: 50px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+        .profile {
+            margin-top: 20px;
+            margin-bottom: 0px;
+            gap: 0px;
+        
+            align-items: flex-start;
+            justify-content: flex-start;
+    
+            display: flex;
+            flex-direction: column;
+        }
+
+        input{
+            border: none;
+            padding: 10px;
+            width: 400px;
+            height: 35px;
+            background-color: rgb(211, 208, 208);
+            color: white;
+            font-size: 25px;
+            border-radius: 30px;
+        }
+
+        
+
+
+        .user{
+            display: flex;
+            align-items: center;
+            gap: 5px;
+
+        }
+        .user p{
+            font-size: 25px;
+        }
+        .user img{
+            height: 50px;
+            width: 50px;
+            border-radius: 50%;
+            background-color: blueviolet;
+            align-items: center;
+            justify-content: center;
+            object-fit: cover;
+        }
+        nav h1{
+            font-size: 50px;
+            padding-left: 40px;
+        }
+        nav{
+            background: white;
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+        justify-content: space-between;
+        align-items: center;
+            height: 80px;
+        }
+
+
+
+
+    </style>
+
+
+
+
+
+
+
+
+<nav>
+    <a style="text-decoration: none; color: black;" href="{% url 'index' %}"><h1>Discuss</h1></a>
+    <input type="text" placeholder="Search">
+    <div class="user">
+
+        <img src="{{user.profile_photo.url}}" alt="">
+   
+        <p>{{ user.username }}</p>
+    </div>
+  </nav>
+
+
+
+
+
+
+
+
+
+
+    <div class="content">
+        <img src="{{ user.profile_photo.url }}" alt="Profile Photo">
+        <div class="profile">
+            <h2>{{ user.username }}</h2>
+
+            <p>{{ user.first_name }} {{ user.last_name }}</p>
+            <p>{{ user.bio }}</p>
+            {% if user in user.friends %}
+            <a 
+            style="text-decoration: none;
+            color: black; border: 1px solid black; border-radius: 40px; padding: 5px;"
+            href="{% url 'friend_request' user.username %}">Send Friend Request</a>
+            {% else %}
+          <button 
+          style="border: 1px solid black; background-color: white; border-radius: 30px; padding: 10px;">Friends Already</button>
+            {% endif %}
+        </div>
+    </div>
+    
+
+
+
+
+<div class="contents" style="display: flex; width: 100%;">
+
+
+
+    <div class="allcontent" style="display: flex; flex-direction: column;
+    align-items: center;
+    justify-content: center;width: 50%;overflow-y: scroll;">
+    
+      {% if user_posts %}
+    
+      {% for post in user_posts %}
+      <div class="card">
+        {% if post.user.profile_photo %}
+    <img class="profilee" src="{{MEDIA_URL}}{{post.user.profile_photo.url}}" alt="no">
+     {% endif %}
+    <div class="carddata">
+    <a href="">{{post.user.username}}</a>
+    <p>{{post.content}}</p>
+    {% if post.image %}
+    
+    <img class="post" src="{{MEDIA_URL}}{{ post.image.url }}" alt="">
+    {% endif %}
+    <div class="icons">
+      <img src="data:image/png;base64,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" alt="">
+     <a href="{% url 'view_post' post.id %}"> <img style="margin-top: 7px;" src="https://cdn-icons-png.flaticon.com/512/1380/1380338.png" alt="">
+     </div></a> 
+    </div>
+      </div>
+      {% endfor %}
+    
+    
+    {% endif %}
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+    
+     <ul>
+        <h1>Friends</h1>
+    {% for friend in user.get_friends %}
+    <div class="friend" style="display: flex; justify-content: flex-start; align-items: center">
+      <img src="{{friend.profile_photo.url}}" alt="" height="80px" width="80px" style="border-radius: 50%; object-fit: contain">
+      <a
+      style="color: black; text-decoration: none;"
+      href="{% url 'friend_profile' friend.id %}"> <li style="list-style: none;">{{ friend.username }}</li></a>
+    </div>
+    
+        {% endfor %} 
+  </ul>
+
+
+
+
+
+
+
+</div>
+
+
+
+
+
+  <style>
+    
+        .card{
+            display: flex;
+            flex-direction: row;
+            max-height: 550px;
+            background-color: white;
+            padding: 10px;
+
+            width: 80%;
+        }
+        .post{
+            height: 300px;
+            max-width: 300px;
+            object-fit: contain;
+
+        }
+        .profilee{
+            position: relative;
+            object-fit: cover;
+            height: 60px;
+            width: 60px;
+
+        }
+        .carddata p{
+            font-size: 30px;
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+        .carddata a{
+            margin-top: 0;
+            margin-bottom: 0;
+            text-decoration: none;
+            color: black;
+            font-weight: bold;
+            font-size: 30px;
+        }
+.icons {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 150px;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+.icons img{
+    
+
+    height: 40px;
+    width: 40px;
+
+}
+    
+    .profilee{
+            height: 50px;
+            width: 50px;
+            border-radius: 50%;
+            margin-right: 30px;
+        }
+  </style>
+    <!-- You may add more sections for posts or any other information -->
+</body>
+</html>

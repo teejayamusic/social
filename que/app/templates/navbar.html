@@ -1,0 +1,31 @@
+<!-- yourappname/templates/base.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My Site{% endblock %}</title>
+    <!-- Include any common CSS files here -->
+    <link rel="stylesheet" type="text/css" href="{% static 'app/css/allposts.css' %}">
+</head>
+<body>
+    <nav>
+        <a class="sidebar" href="">=</a>
+        <a class="logo" href="{% url 'home' %}">Discuss</a>
+        <div class="user">
+            {% if user.is_authenticated %}
+                <p>Hello, {{ user.username }}! <a href="{% url 'logout' %}">Logout</a></p>
+            {% else %}
+                <p><a href="{% url 'login' %}">Login</a> or <a href="{% url 'register' %}">Register</a></p>
+            {% endif %}
+        </div>
+    </nav>
+
+    <div id="content">
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- Include any common JavaScript files here -->
+</body>
+</html>

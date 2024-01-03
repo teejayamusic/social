@@ -1,0 +1,113 @@
+*{
+    margin: 0;
+    overflow-y: auto;
+    padding: 0;
+}
+
+nav{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background: #000;
+    color: white;
+    height: 80px;
+}
+.nav a{
+    text-decoration: none;
+}
+.logo{
+    color: white;
+    font-size: 40px;
+}
+.user{
+    color: white;
+}
+
+.like button
+{
+    border-radius: 50%;
+    border: none;
+    height: 40px;
+    color: white;
+    background-color:blueviolet;
+    padding: 10px;
+}
+
+.user a{
+    text-decoration: none;
+}
+
+
+.sidebar{
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+    font-size: 40px;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+background-color: black;
+
+}
+
+.sidebar a{
+    text-decoration: none;
+    color: white;
+    font-size: 30px;
+}
+
+
+.allpost{
+    display: grid; 
+    grid-template-columns: 0.5fr 1.5fr 0.8fr; 
+    grid-template-rows: 1fr; 
+    gap: 0px 0px; 
+    grid-template-areas: 
+      ". . .";
+    width: 100%;
+
+}
+
+
+.feed{
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    overflow-y:visible;
+}
+.fee img{
+    height: 40px;
+    border-radius: 50%;
+
+}
+.feedname{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    border: 1px solid black;
+}
+.fee p{
+    width: 100%;
+    height: 100px;
+    background-color: rgb(255, 255, 255);
+}
+.like {
+    display: flex;
+    align-items: center;
+    
+    
+}
+.like a{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+width: 40px;
+height: 40px;
+font-size: 9px;
+text-decoration: none;
+color: white;
+    background-color: blueviolet;
+}

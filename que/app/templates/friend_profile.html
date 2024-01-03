@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+
+
+<body>
+
+<style>
+         @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+}
+.user{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+}
+.user p{
+    font-size: 25px;
+}
+.user img{
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    background-color: blueviolet;
+    align-items: center;
+    justify-content: center;
+    object-fit: cover;
+}
+nav h1{
+    font-size: 50px;
+    padding-left: 40px;
+}
+nav{
+    background: white;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+justify-content: space-between;
+align-items: center;
+    height: 80px;
+}
+input{
+            border: none;
+            padding: 10px;
+            width: 400px;
+            height: 35px;
+            background-color: rgb(211, 208, 208);
+            color: white;
+            font-size: 25px;
+            border-radius: 30px;
+        }
+
+
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<nav>
+<a style="text-decoration: none; color: black;" href="{% url 'index' %}"><h1>Discuss</h1></a>
+<input type="text" placeholder="Search">
+<div class="user">
+
+<img src="{{user.profile_photo.url}}" alt="">
+
+<p>{{ user.username }}</p>
+</div>
+</nav>
+
+
+
+
+
+
+
+
+
+
+
+    <!-- friend_profile.html -->
+<div class="userr" style="display: flex; align-items: center; width: 100%; height:50px; justify-content: center;" >
+<a href="{%url 'home' %}">back</a>
+    <img src="{{friend.profile_photo.url}}" alt="" height="50px" width="50px" style="border-radius: 50%; object-fit: contain;">
+    <h2>{{ friend.username }}</h2>
+</div>
+
+<!-- Add more profile details here -->
+
+<!-- You can also include a link to start a chat or other actions -->
+<div class="chatcontainer">
+
+
+<div class="chatbox" style="width: 50%; display: flex; flex-direction: column;margin:auto;
+ height: 60vh; overflow-y: scroll;">
+
+    {% for chat in chats %}
+    {% if chat.sender == user and chat.receiver == friend %}
+    <div style="display: flex;flex-direction: column; align-items: flex-start; justify-content: flex-start;
+    
+    gap: 4px;
+    " class="sentchat">
+    
+        <p style="background-color: blueviolet; color: white; ; width: 300px; border-radius: 30px;
+        align-items: center; justify-content: center; padding: 15px; margin-top: 5px; margin-bottom: 5px;">{{chat.content}}</p>
+    </div>
+    
+    {% elif chat.sender == friend and chat.receiver == user %}
+    <div class="recieve" style="display: flex; align-items: flex-end; justify-content: flex-end;;">
+        <p style="width: 300px; background-color: rgb(39, 0, 75); padding: 15px; color: whitesmoke; border-radius: 30px; margin-top: 5px;">{{chat.content}}</p>
+    </div>
+    
+    {% endif %}
+    {% endfor %}
+</div>
+
+
+<form action="" id="myform" method="POST">
+{% csrf_token %}
+    {{form}}
+    <button style="font-size: 25px; padding: 10px; border-radius: 30px; border: none; color: white; background-color:rgb(62, 2, 119);" type="submit" id="submit">send</button>
+</form>
+</div>
+</body>
+</html>

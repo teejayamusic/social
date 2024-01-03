@@ -1,0 +1,102 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- all_posts.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Posts</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'app/css/allposts.css' %}">
+</head>
+<body>
+    
+<nav>
+    <a class="logo" href="">Discuss</a>
+  
+    
+    <div class="user">
+
+        {% if user.is_authenticated %}
+        <p>Hello, {{ user.username }}! <a href="{% url 'logout' %}">Logout</a></p>
+    {% else %}
+        <p><a href="{% url 'login' %}">Login</a> or <a href="{% url 'register' %}">Register</a></p>
+    {% endif %}
+    
+    </div>
+
+</nav>
+<div class="allpost">
+
+
+
+    <div class="sidebar">
+        <a href="">Feed</a>
+        <a href="">Messaging</a>
+        <a href="">Create Post</a>
+        <a href="">Friends</a>
+    </div>
+    <div class="feed">
+
+        {% for post in all_posts %}
+        <div class="fee">
+            <div class="feedname">
+                <img src="https://cdn-icons-png.flaticon.com/512/666/666201.png" alt="">
+                <strong>{{ post.user.username }}</strong>
+            </div>
+            
+            <p>{{ post.content }}</p>
+            
+            {% if user.is_authenticated %}
+                <form method="post" action="{% url 'like_post' post.id %}">
+                    {% csrf_token %}
+                    <button type="submit">Like</button>
+                </form>
+
+                <form method="post" action="{% url 'add_comment' post.id %}">
+                    {% csrf_token %}
+                    <textarea name="content" required></textarea>
+                    <button type="submit">Add Comment</button>
+                </form>
+            {% endif %}
+            <a href="{% url 'view_post' post.id %}">View Post</a>
+            <h4>Comments:</h4>
+            <ul>
+                {% for comment in post.comments.all %}
+                    <li><strong>{{ comment.user.username }}</strong>: {{ comment.content }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endfor %}
+
+
+
+
+    </div>
+        
+
+
+
+<div class="messaging">
+    <h1>Messages</h1>
+</div>
+
+
+
+</div>
+
+</body>
+</html>
+
+</body>
+</html>

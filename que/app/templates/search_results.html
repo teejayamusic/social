@@ -1,0 +1,21 @@
+<!-- search_results.html -->
+<div class="search" style="display:flex; flex-direction: column;
+position: absolute; left: 30%; width: 500px;background-color: rgb(255, 255, 255);
+border-radius: 30px;
+">
+    {% for user in users %}
+    <div class="user" style="display: flex; flex-direction: row; align-items: center; justify-content: flex-start; padding: 10px;">
+        {% if user.profile_photo %}
+        <img src="{{user.profile_photo.url}}" alt="" height="60px" width="60px" style="border-radius: 50%; object-fit: cover;">
+        {% endif %}
+        <a 
+        style="text-decoration: none; color: black;"
+        href="{% url 'user_detail' username=user.username %}">{{ user.username }}</a>
+
+
+    </div>
+   
+    {% endfor %}
+    
+
+</div>

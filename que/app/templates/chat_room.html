@@ -1,0 +1,40 @@
+<!-- chat_room.html -->
+
+
+{% block content %}
+    <h2>Chat Room</h2>
+
+    {% if active_chat %}
+        <h3>Active Chat: {{ active_chat }}</h3>
+        <!-- Display chat messages here -->
+        {% for message in active_chat.message_set.all %}
+            <p>{{ message.sender.username }}: {{ message.content }}</p>
+        {% endfor %}
+        <form method="post" action="{% url 'send_message' chat_id=active_chat.id %}">
+            {% csrf_token %}
+            {{ message_form.as_p }}
+            <button type="submit">Send Message</button>
+        </form>
+    {% else %}
+        <h3>No Active Chat</h3>
+        <form method="post" action="">
+            {% csrf_token %}
+            {{ chat_form.as_p }}
+            <button type="submit">Create Chat</button>
+        </form>
+    {% endif %}
+
+    <h3>Your Chats</h3>
+    <ul>
+        {% for chat in chats %}
+            <li><a href="{% url 'select_chat' chat_id=chat.id %}">{{ chat }}</a></li>
+        {% endfor %}
+    </ul>
+
+    <h3>Your Friends</h3>
+    <ul>
+        {% for friend in friends %}
+            <li>{{ friend.username }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

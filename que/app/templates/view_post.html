@@ -1,0 +1,126 @@
+
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+     @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+}
+input{
+            border: none;
+            padding: 10px;
+            width: 400px;
+            height: 35px;
+            background-color: rgb(211, 208, 208);
+            color: white;
+            font-size: 25px;
+            border-radius: 30px;
+        }
+
+   .user{
+            display: flex;
+            align-items: center;
+            gap: 5px;
+
+        }
+        .user p{
+            font-size: 25px;
+        }
+        .user img{
+            height: 50px;
+            width: 50px;
+            border-radius: 50%;
+            background-color: blueviolet;
+            align-items: center;
+            justify-content: center;
+        }
+        nav h1{
+            font-size: 50px;
+            padding-left: 40px;
+        }
+        nav{
+            background: white;
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+        justify-content: space-between;
+        align-items: center;
+            height: 80px;
+        }
+        .post{
+            height: 300px;
+            max-width: 300px;
+            object-fit: contain;
+
+        }
+        .profile{
+            position: relative;
+            object-fit: cover;
+            height: 60px;
+            width: 60px;
+
+        }   
+    </style>
+    <nav>
+        <h1>Discuss</h1>
+        <input type="text" placeholder="Search">
+        <div class="user">
+    
+            <img src="" alt="">
+       
+            <p>{{ user.username }}</p>
+        </div>
+      </nav>
+    <!-- view_post.html -->
+   <div class="post" style="display: flex; flex-direction: row;
+   align-items: flex-start; ;width: 100%; padding-left: 40px;">
+
+    <img style="overflow-y: hidden; border-radius: 50%; " src="" alt="" height="70px" width="70px">
+<div class="content" style="">
+
+
+    <h2 style="font-size: 30px;">{{ post.user.username }}</h2>
+    
+    <p style="font-size: 40px;">{{ post.content }}</p>
+    {% if post.image %}
+    <img style="height: 300px;object-fit: contain;" src="{{MEDIA_URL}} {{post.image.url}}" alt="">
+    {% endif %}
+    <form style="display: flex; align-items: center;" method="post" action="{% url 'like_post' post.id %}">
+        {% csrf_token %}
+
+   <button style="border-radius: 50%; border: none;"><img style="height: 50px; border-image-width: 50px; border-radius: 50%;" src="https://image.similarpng.com/very-thumbnail/2020/06/Icon-like-button-transparent-PNG.png" alt=""></button>     
+    <p style="font-size: 30px;margin-left: 20px;">{{likes.count}}</p>
+    </form>
+    <form style="display: flex;width: 100%; align-items: center; justify-content: space-between;" method="post" action="{% url 'add_comment' post.id %}">
+        {% csrf_token %}
+        <textarea style="height: 80px; width: 70%; font-size: 20px;" name="content" required></textarea>
+        <button style="border: none;border-radius: 10%; padding: 10px; background-color: blueviolet; color: white; font-size: 20px;" type="submit">Add Comment</button>
+    </form>
+    <h3 style="font-size: 40px;">Comments</h3>
+    <ul>
+        {% for comment in comments %}
+            <li style="display: flex; align-items: center;"><p style="font-weight: bold;font-size: 25px;"> {{ comment.user.username }}: </p> <h4 style="font-weight: lighter; font-size: 25px;">{{ comment.content }} </h4></li>
+        {% endfor %}
+    </ul>
+    
+
+</div>
+    
+   </div>
+
+
+
+</body>
+</html>
+
+{% endblock %}
